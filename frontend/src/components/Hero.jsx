@@ -14,21 +14,21 @@ export const Hero = () => {
         <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-brand-cyan to-transparent animate-scanline"></div>
       </div>
 
-      {/* Code Accent Bracket Tag */}
-      <div className="flex items-center space-x-2 border border-brand-border bg-brand-dark px-3 py-1 text-[10px] font-mono uppercase tracking-widest text-brand-cyan mb-6 animate-fade-in-up">
-        <span className="text-brand-emerald">●</span>
-        <span>SYS.STATUS: OPERATIONAL_v1.0</span>
+      {/* Premium Badge Status */}
+      <div className="flex items-center space-x-2 border border-brand-border/60 bg-brand-dark/40 px-3.5 py-1.5 text-[10px] uppercase tracking-widest text-brand-cyan mb-6 animate-fade-in-up rounded-full font-semibold">
+        <span className="h-1.5 w-1.5 bg-brand-emerald rounded-full animate-pulse"></span>
+        <span>ATS Analyzer Active</span>
       </div>
 
-      {/* Ultra-Premium Brutalist Header */}
-      <h1 className="text-5xl md:text-8xl font-black tracking-tighter text-center max-w-4xl leading-[0.95] mb-6 animate-fade-in-up delay-100 uppercase select-none">
-        DECODE THE <br />
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan via-brand-cyan to-brand-emerald">ALGORITHM.</span>
+      {/* Ultra-Premium Header */}
+      <h1 className="text-5xl md:text-7xl font-black tracking-tight text-center max-w-4xl leading-[1.05] mb-6 animate-fade-in-up delay-100 uppercase select-none">
+        Optimize Your Resume for <br />
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan via-brand-cyan to-brand-emerald">Applicant Systems</span>
       </h1>
 
-      {/* Center-Staggered Subtitle */}
-      <p className="text-brand-muted text-base md:text-lg text-center max-w-xl font-mono leading-relaxed mb-8 animate-fade-in-up delay-200 uppercase tracking-tight">
-        [ Engineering-grade resume fit evaluation using Claude 3.5 Sonnet to parse structure, keyword overlap & formatting anomalies. ]
+      {/* Subtitle */}
+      <p className="text-brand-muted text-sm md:text-base text-center max-w-xl leading-relaxed mb-8 animate-fade-in-up delay-200">
+        Evaluate and optimize your resume matching score against any target job description instantly using our advanced AI-powered analyzer.
       </p>
 
       {/* Premium Horizontal Split Accent Lines */}

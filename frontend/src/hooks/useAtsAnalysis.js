@@ -13,6 +13,7 @@ const API_URL = import.meta.env.VITE_API_URL !== undefined
  */
 export const useAtsAnalysis = (isPaid, triggerPaywall) => {
   const [resumeText, setResumeText] = useState('');
+  const [resumeFile, setResumeFile] = useState(null);
   const [jobDescription, setJobDescription] = useState('');
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -23,19 +24,36 @@ export const useAtsAnalysis = (isPaid, triggerPaywall) => {
     setError(null);
     setResults(null);
 
-    if (!resumeText.trim() || !jobDescription.trim()) {
-      setError({ code: 'MISSING_FIELDS', message: 'Both Resume and Job Description are required fields.' });
+    const hasResumeInput = resumeFile || resumeText.trim();
+    if (!hasResumeInput || !jobDescription.trim()) {
+      setError({ code: 'MISSING_FIELDS', message: 'Both Resume (file or text) and Job Description are required fields.' });
       return;
     }
 
     setLoading(true);
 
     try {
-      const response = await axios.post(`${API_URL}/api/analyze`, {
-        resumeText,
-        jobDescription,
-        isPaid
-      });
+      let response;
+      if (resumeFile) {
+        // Send as multipart/form-data for file uploads
+        const formData = new FormData();
+        formData.append('resumeFile', resumeFile);
+        formData.append('jobDescription', jobDescription);
+        formData.append('isPaid', isPaid);
+
+        response = await axios.post(`${API_URL}/api/analyze`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+      } else {
+        // Fall back to standard JSON payload for pasted text
+        response = await axios.post(`${API_URL}/api/analyze`, {
+          resumeText,
+          jobDescription,
+          isPaid
+        });
+      }
 
       setResults(response.data);
     } catch (err) {
@@ -53,9 +71,17 @@ export const useAtsAnalysis = (isPaid, triggerPaywall) => {
         } else if (code === 'MISSING_FIELDS') {
           message = 'Inputs appear incomplete. Please check your text and retry.';
         } else if (code === 'CLAUDE_FAILED') {
-          message = 'Failed to analyze resume with Claude AI. Please try again.';
+          message = 'Failed to analyze resume with the AI service. Please try again.';
         } else if (code === 'PARSE_FAILED') {
           message = 'ATS rating engine returned invalid formatted results. Retrying could solve this.';
+        } else if (code === 'FILE_TOO_LARGE') {
+          message = apiError.detail || 'The uploaded file is too large (maximum 5MB).';
+        } else if (code === 'INVALID_FILE_TYPE') {
+          message = apiError.detail || 'Invalid file type. Please upload a PDF, DOCX, or TXT file.';
+        } else if (code === 'EMPTY_EXTRACTED_TEXT') {
+          message = apiError.detail || "We couldn't extract any readable text from this document.";
+        } else if (code === 'FILE_PARSE_FAILED') {
+          message = apiError.detail || 'Failed to extract text from the uploaded file.';
         }
 
         setError({ code, message, detail: apiError.detail });
@@ -78,6 +104,8 @@ export const useAtsAnalysis = (isPaid, triggerPaywall) => {
   return {
     resumeText,
     setResumeText,
+    resumeFile,
+    setResumeFile,
     jobDescription,
     setJobDescription,
     results,

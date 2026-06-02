@@ -21,6 +21,8 @@ function App() {
   const {
     resumeText,
     setResumeText,
+    resumeFile,
+    setResumeFile,
     jobDescription,
     setJobDescription,
     results,
@@ -43,21 +45,26 @@ function App() {
     <div className="flex-grow flex flex-col min-h-screen bg-brand-dark text-brand-text font-sans">
       
       {/* Top Premium Status Navbar */}
-      <nav className="w-full border-b border-brand-border py-4 px-6 bg-brand-dark flex justify-between items-center z-10">
-        <div className="flex items-center space-x-2 font-sans font-bold tracking-tight text-brand-text">
-          <span className="text-xl">🎯</span>
-          <span className="uppercase tracking-widest text-xs font-mono">ATS SCORER // ENTERPRISE PRO</span>
+      <nav className="w-full border-b border-brand-border/60 py-4 px-6 bg-brand-dark flex justify-between items-center z-10">
+        <div className="flex items-center space-x-2.5 text-brand-text">
+          <div className="flex items-center justify-center h-8 w-8 rounded-lg bg-gradient-to-br from-brand-cyan to-brand-emerald text-brand-dark font-extrabold text-sm select-none">
+            🎯
+          </div>
+          <div className="flex flex-col">
+            <span className="font-sans font-extrabold tracking-tight text-sm uppercase leading-none">ATS Scorer</span>
+            <span className="text-[9px] font-mono tracking-widest text-brand-cyan uppercase leading-none mt-1">Enterprise Pro</span>
+          </div>
         </div>
         <div className="flex items-center space-x-4">
           {isPaid ? (
-            <span className="px-3 py-1 bg-brand-emerald/10 border border-brand-emerald/20 text-brand-emerald text-xs font-mono uppercase tracking-wider font-semibold">
+            <span className="px-3.5 py-1 bg-brand-emerald/10 border border-brand-emerald/20 text-brand-emerald text-xs font-mono uppercase tracking-wider font-semibold rounded-full">
               Premium License Locked
             </span>
           ) : (
             <button
               id="get-premium-scans-btn"
               onClick={openPaywall}
-              className="px-4 py-1.5 bg-brand-card hover:bg-slate-900 border border-brand-border text-xs uppercase font-mono tracking-wider font-semibold transition-colors duration-200"
+              className="px-4 py-2 bg-brand-card hover:bg-slate-900 border border-brand-border hover:border-brand-cyan text-xs uppercase font-mono tracking-wider font-semibold transition-all duration-200 rounded-lg"
             >
               Get Premium Scans
             </button>
@@ -83,13 +90,15 @@ function App() {
               <ResumeUpload
                 value={resumeText}
                 onChange={setResumeText}
+                file={resumeFile}
+                onFileChange={setResumeFile}
                 limit={3000}
               />
             </div>
 
             {/* General App/Validation Errors */}
             {error && error.code !== 'FREE_LIMIT_REACHED' && (
-              <div className="w-full p-4 bg-brand-rose/10 border border-brand-rose/20 text-brand-rose text-xs font-mono">
+              <div className="w-full p-4 bg-brand-rose/10 border border-brand-rose/20 text-brand-rose text-xs font-mono rounded-lg">
                 ⚠️ Error: {error.message} {error.detail ? `(${error.detail})` : ''}
               </div>
             )}
@@ -100,12 +109,12 @@ function App() {
                 id="score-resume-btn"
                 onClick={analyze}
                 disabled={loading}
-                className="w-full max-w-lg py-5 bg-[#10b981] hover:bg-[#059669] text-brand-dark font-extrabold uppercase font-mono tracking-widest hover:scale-[1.01] active:scale-[0.99] transition-transform duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center border-2 border-transparent"
+                className="w-full max-w-lg py-4 bg-brand-emerald hover:bg-emerald-500 text-brand-dark font-extrabold uppercase font-mono tracking-widest hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center border-2 border-transparent rounded-xl shadow-lg shadow-brand-emerald/10"
               >
                 {loading ? (
                   <span className="flex items-center space-x-2">
                     <span className="animate-spin h-5 w-5 border-2 border-brand-dark border-t-transparent rounded-full"></span>
-                    <span>Claude Grader Analyzing Resume...</span>
+                    <span>Analyzing Resume...</span>
                   </span>
                 ) : (
                   <span>Score Candidate Resume</span>

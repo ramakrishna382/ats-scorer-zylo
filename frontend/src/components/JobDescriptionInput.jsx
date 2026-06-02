@@ -13,17 +13,14 @@ export const JobDescriptionInput = ({ value, onChange, limit }) => {
   };
 
   return (
-    <div className={`w-full bg-brand-card border p-6 transition-spring duration-300 relative ${focused ? 'border-brand-cyan shadow-[0_0_20px_rgba(6,182,212,0.08)]' : 'border-brand-border/80'}`}>
+    <div className={`w-full bg-brand-card border p-6 transition-spring duration-300 relative rounded-xl ${focused ? 'border-brand-cyan/80 shadow-[0_0_24px_rgba(6,182,212,0.06)]' : 'border-brand-border/60'}`}>
       
-      {/* Absolute Geometric Visual Node */}
-      <div className={`absolute top-[-1px] left-8 h-[2px] w-12 transition-colors duration-300 ${focused ? 'bg-brand-cyan' : 'bg-brand-border/40'}`}></div>
-
       <div className="flex justify-between items-center mb-4">
-        <label htmlFor="jd-input-textarea" className="text-xs uppercase font-mono tracking-wider font-semibold text-brand-text flex items-center cursor-pointer">
-          <span className="text-brand-cyan mr-2">SYS.INPUT.01 //</span> JOB CRITERIA
+        <label htmlFor="jd-input-textarea" className="text-sm font-bold tracking-tight text-brand-text flex items-center cursor-pointer">
+          <span className="text-brand-cyan mr-2">📋</span> Target Job Description
         </label>
         <span className="text-xs font-mono text-brand-muted">
-          LEN: <span className={charCount > limit - 200 ? 'text-brand-rose font-bold' : 'text-brand-cyan'}>{charCount}</span> / {limit}
+          Characters: <span className={charCount > limit - 200 ? 'text-brand-rose font-bold' : 'text-brand-cyan'}>{charCount}</span> / {limit}
         </span>
       </div>
 
@@ -33,32 +30,32 @@ export const JobDescriptionInput = ({ value, onChange, limit }) => {
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="Paste your target Job Description / Role requirements here..."
-        className="w-full h-72 bg-[#020617] border border-brand-border/60 p-4 text-sm font-mono text-brand-text placeholder-brand-muted/70 focus:outline-none focus:border-brand-cyan resize-none transition-colors duration-200"
+        placeholder="Paste the target job description or role requirements here..."
+        className="w-full h-72 bg-[#020617] border border-brand-border/60 p-4 text-sm text-brand-text placeholder-brand-muted/50 focus:outline-none focus:border-brand-cyan/80 resize-none transition-colors duration-200 rounded-lg"
         maxLength={limit}
       />
 
-      {/* Interactive Cyber Character Progress Bar */}
-      <div className="w-full bg-slate-900 h-[2px] mt-4 relative overflow-hidden">
+      {/* Character count progress bar */}
+      <div className="w-full bg-slate-900 h-1 mt-4 relative overflow-hidden rounded-full">
         <div 
-          className={`h-full ${getProgressColor()} transition-all duration-300`} 
+          className={`h-full ${getProgressColor()} transition-all duration-300 rounded-full`} 
           style={{ width: `${fillPercentage}%` }}
         ></div>
       </div>
 
-      <div className="mt-3 flex justify-between items-center text-[10px] font-mono uppercase tracking-wider">
-        <span className="text-brand-muted">STATUS: {charCount > 0 ? 'LOADED' : 'AWAITING_INPUT'}</span>
+      <div className="mt-3 flex justify-between items-center text-xs tracking-wide">
+        <span className="text-brand-muted font-medium">Status: {charCount > 0 ? <span className="text-brand-emerald font-semibold">Loaded</span> : <span className="text-brand-muted">Awaiting Input</span>}</span>
         
         {charCount >= limit ? (
           <span className="text-brand-rose font-semibold animate-pulse">
-            [ MAX_LIMIT_REACHED ]
+            Max limit reached
           </span>
         ) : charCount > limit - 200 ? (
           <span className="text-brand-amber font-semibold">
-            [ APPROACHING_MAX ]
+            Approaching limit
           </span>
         ) : (
-          <span className="text-brand-muted">UTF-8 COMPLIANT</span>
+          <span className="text-brand-muted font-mono text-[10px]">UTF-8</span>
         )}
       </div>
     </div>

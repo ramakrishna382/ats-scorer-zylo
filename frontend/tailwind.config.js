@@ -22,17 +22,7 @@ export default {
           cyan: '#06b6d4',      // Premium tech glow
         }
       },
-      borderRadius: {
-        // Enforcing strict sharp tech geometry (0px - 2px)
-        'none': '0px',
-        'xs': '1px',
-        'sm': '2px',
-        'md': '2px',
-        'lg': '2px',
-        'xl': '2px',
-        '2xl': '2px',
-        'full': '2px',
-      },
+
       fontFamily: {
         sans: ['Outfit', 'Inter', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],

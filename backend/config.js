@@ -9,6 +9,8 @@ const config = {
   clientUrl: process.env.CLIENT_URL || 'http://localhost:5173',
   anthropicApiKey: process.env.ANTHROPIC_API_KEY,
   anthropicModel: process.env.ANTHROPIC_MODEL || 'claude-3-5-sonnet-20241022',
+  geminiApiKey: process.env.GEMINI_API_KEY,
+  aiProvider: process.env.AI_PROVIDER || 'gemini',
   stripeSecretKey: process.env.STRIPE_SECRET_KEY,
   stripePriceId: process.env.STRIPE_PRICE_ID || 'price_12345',
   stripeCurrency: process.env.STRIPE_CURRENCY || 'usd',
@@ -20,8 +22,11 @@ const config = {
 
 // Defensive startup assertion checks
 const missingKeys = [];
-if (!config.anthropicApiKey) {
+if (config.aiProvider === 'anthropic' && !config.anthropicApiKey) {
   missingKeys.push('ANTHROPIC_API_KEY');
+}
+if (config.aiProvider === 'gemini' && !config.geminiApiKey) {
+  missingKeys.push('GEMINI_API_KEY');
 }
 if (!config.stripeSecretKey) {
   missingKeys.push('STRIPE_SECRET_KEY');
