@@ -139,7 +139,7 @@ function App() {
       <footer className="w-full py-8 border-t border-brand-border bg-[#030712] mt-auto">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-xs text-brand-muted uppercase tracking-widest font-mono">
           <span>© 2026 ATS SCORER INC. ALL RIGHTS RESERVED.</span>
-          <span className="mt-4 md:mt-0 text-brand-cyan">SECURED WORKLOAD VIA ANTHROPIC CLAUDE 3.5</span>
+          <span className="mt-4 md:mt-0 text-brand-cyan">Developed by RK</span>
         </div>
       </footer>
 
