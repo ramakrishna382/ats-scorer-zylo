@@ -6,6 +6,7 @@ import { AnalysisResults } from './components/AnalysisResults';
 import { PaywallModal } from './components/PaywallModal';
 import { useStripePayment } from './hooks/useStripePayment';
 import { useAtsAnalysis } from './hooks/useAtsAnalysis';
+import { GoogleAd } from './components/GoogleAd';
 
 function App() {
   const {
@@ -96,6 +97,8 @@ function App() {
               />
             </div>
 
+            <GoogleAd />
+
             {/* General App/Validation Errors */}
             {error && error.code !== 'FREE_LIMIT_REACHED' && (
               <div className="w-full p-4 bg-brand-rose/10 border border-brand-rose/20 text-brand-rose text-xs font-mono rounded-lg">
@@ -128,10 +131,13 @@ function App() {
 
           </div>
         ) : (
-          <AnalysisResults
-            results={results}
-            onReset={reset}
-          />
+          <div className="space-y-6">
+            <AnalysisResults
+              results={results}
+              onReset={reset}
+            />
+            <GoogleAd />
+          </div>
         )}
       </main>
 
