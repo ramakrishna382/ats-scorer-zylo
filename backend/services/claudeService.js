@@ -1,10 +1,20 @@
 const { Anthropic } = require('@anthropic-ai/sdk');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 const config = require('../config');
 const logger = require('../utils/logger');
 
-const anthropic = new Anthropic({
-  apiKey: config.anthropicApiKey
-});
+// Initialize API clients conditionally to avoid startup crashes if keys are omitted
+let anthropic = null;
+if (config.anthropicApiKey) {
+  anthropic = new Anthropic({
+    apiKey: config.anthropicApiKey
+  });
+}
+
+let geminiAI = null;
+if (config.geminiApiKey) {
+  geminiAI = new GoogleGenerativeAI(config.geminiApiKey);
+}
 
 const NS = 'ClaudeService';
 
@@ -99,15 +109,41 @@ ${resumeTrunc}
 Please perform the scoring and return the specified JSON structure.`;
 
   try {
-    const response = await anthropic.messages.create({
-      model: config.anthropicModel,
-      max_tokens: 1500,
-      system: systemInstructions,
-      messages: [{ role: 'user', content: userPrompt }]
-    });
+    let rawContent;
 
-    const rawContent = response.content[0].text;
-    logger.debug(NS, 'Received raw response from Claude');
+    if (config.aiProvider === 'gemini') {
+      if (!geminiAI) {
+        throw new Error('Gemini API key is not configured.');
+      }
+      logger.info(NS, 'Routing analysis request to Google Gemini (gemini-2.5-flash)');
+      
+      const model = geminiAI.getGenerativeModel({
+        model: 'gemini-2.5-flash',
+        systemInstruction: systemInstructions,
+        generationConfig: {
+          responseMimeType: 'application/json'
+        }
+      });
+
+      const response = await model.generateContent(userPrompt);
+      rawContent = response.response.text();
+    } else {
+      if (!anthropic) {
+        throw new Error('Anthropic API key is not configured.');
+      }
+      logger.info(NS, `Routing analysis request to Anthropic Claude (${config.anthropicModel})`);
+      
+      const response = await anthropic.messages.create({
+        model: config.anthropicModel,
+        max_tokens: 1500,
+        system: systemInstructions,
+        messages: [{ role: 'user', content: userPrompt }]
+      });
+
+      rawContent = response.content[0].text;
+    }
+
+    logger.debug(NS, 'Received raw response from AI service');
 
     const cleaned = cleanJsonString(rawContent);
 
