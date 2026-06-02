@@ -1,6 +1,6 @@
 # fly.toml app configuration file
 app = "ats-scorer"
-primary_region = "bos"
+primary_region = "ewr"
 
 [build]
   dockerfile = "Dockerfile"
