@@ -44,7 +44,25 @@ app.get('/health', (req, res) => {
 if (process.env.NODE_ENV === 'production') {
   const path = require('path');
   const frontendDistPath = path.join(__dirname, '../frontend/dist');
-  app.use(express.static(frontendDistPath));
+  const landingDistPath = path.join(__dirname, '../frontend-landing/dist');
+  
+  // Direct global route for ads.txt (failsafe for Google AdSense verification)
+  app.get('/ads.txt', (req, res) => {
+    res.type('text/plain');
+    res.send('google.com, pub-8681805901258340, DIRECT, f08c47fec0942fa0\n');
+  });
+
+  // Serve static assets conditionally based on domain
+  app.use((req, res, next) => {
+    const host = req.hostname;
+    const isScorer = host === 'atsscore.zyloconnect.com' || host === 'ats-scorer.fly.dev';
+    
+    if (isScorer) {
+      express.static(frontendDistPath)(req, res, next);
+    } else {
+      express.static(landingDistPath)(req, res, next);
+    }
+  });
   
   // Catch-all route to serve React's index.html for client-side routing
   app.get('*', (req, res) => {
@@ -52,7 +70,15 @@ if (process.env.NODE_ENV === 'production') {
     if (req.originalUrl.startsWith('/api') || req.originalUrl === '/health') {
       return res.status(404).json({ error: 'NOT_FOUND', detail: `Endpoint ${req.originalUrl} not found` });
     }
-    res.sendFile(path.join(frontendDistPath, 'index.html'));
+    
+    const host = req.hostname;
+    const isScorer = host === 'atsscore.zyloconnect.com' || host === 'ats-scorer.fly.dev';
+    
+    if (isScorer) {
+      res.sendFile(path.join(frontendDistPath, 'index.html'));
+    } else {
+      res.sendFile(path.join(landingDistPath, 'index.html'));
+    }
   });
 } else {
   // Unhandled route fallback (development)

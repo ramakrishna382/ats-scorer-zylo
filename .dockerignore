@@ -5,6 +5,8 @@ backend/node_modules/
 
 # Build artifacts
 frontend/dist/
+frontend-landing/dist/
+frontend-landing/node_modules/
 
 # Environment files and credentials
 .env
