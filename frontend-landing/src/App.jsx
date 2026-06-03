@@ -125,7 +125,7 @@ const appsList = [
   {
     title: "Resume ATS scorer",
     description: "Paste a job description + resume. Get ATS match %, missing keywords, rewrite suggestions.",
-    tags: ["1 week", "ai", "indie"],
+    tags: ["ai", "indie"],
     status: "active",
     url: "https://atsscore.zyloconnect.com",
     isHot: true
@@ -133,71 +133,71 @@ const appsList = [
   {
     title: "Contract plain-English explainer",
     description: "Upload any contract (NDA, lease, offer letter). Get a plain-English summary + red flags.",
-    tags: ["1 week", "ai", "saas"],
+    tags: ["ai", "saas"],
     status: "upcoming",
     isHot: true
   },
   {
     title: "LinkedIn post generator",
     description: "Input: topic + tone + your experience. Output: post with hooks, formatting, hashtags.",
-    tags: ["1 week", "ai", "indie"],
+    tags: ["ai", "indie"],
     status: "upcoming"
   },
   {
     title: "PR description generator",
     description: "Connect GitHub. Auto-write PR descriptions from diffs — what changed, why, testing notes.",
-    tags: ["1 week", "api", "ai"],
+    tags: ["api", "ai"],
     status: "upcoming",
     isHot: true
   },
   {
     title: "Invoice data extractor",
     description: "Upload a pile of invoices (PDF/image). Get structured CSV with vendor, amount, date, category.",
-    tags: ["1 week", "ai", "saas"],
+    tags: ["ai", "saas"],
     status: "upcoming"
   },
   {
     title: "Cold email personalizer",
     description: "Paste a LinkedIn URL or company name. Get a hyper-personalized cold email in 10 seconds.",
-    tags: ["1 week", "ai", "indie"],
+    tags: ["ai", "indie"],
     status: "upcoming"
   },
   {
     title: "Stack Overflow for your codebase",
     description: "Connect a GitHub repo. Ask questions in plain English. Get answers grounded in your actual code.",
-    tags: ["2 weeks", "api", "ai"],
+    tags: ["api", "ai"],
     status: "upcoming",
     isHot: true
   },
   {
     title: "SaaS metrics dashboard",
     description: "Connect Stripe. Auto-generate MRR, churn, LTV, cohort analysis in one clean dashboard.",
-    tags: ["2 weeks", "saas", "api"],
+    tags: ["saas", "api"],
     status: "upcoming"
   },
   {
     title: "AI quiz generator from any content",
     description: "Paste a blog post, PDF, or YouTube URL. Get a 10-question quiz with answers and explanations.",
-    tags: ["1 week", "ai", "indie"],
+    tags: ["ai", "indie"],
     status: "upcoming"
   },
   {
     title: "Product changelog writer",
     description: "Input your git commits or bullet points. Output: beautiful, user-facing changelog in your brand voice.",
-    tags: ["1 week", "ai", "saas"],
+    tags: ["ai", "saas"],
     status: "upcoming"
   },
   {
     title: "Meeting summary + action extractor",
     description: "Paste or upload a meeting transcript. Get summary, decisions made, and action items with owners.",
-    tags: ["1 week", "ai", "saas"],
+    tags: ["ai", "saas"],
     status: "upcoming",
     isHot: true
   },
   {
     title: "Freelancer rate calculator",
     description: "Input your skills, location, experience. Get market rate range with negotiation tips backed by real data.",
-    tags: ["1 week", "ai", "indie"],
+    tags: ["ai", "indie"],
     status: "upcoming"
   }
 ];
